@@ -1,0 +1,201 @@
+import 'package:flutter/material.dart';
+
+List dataDumy = [
+  {
+    "albumId": 1,
+    "id": 1,
+    "title": "android tutorial",
+    "url": "https://via.placeholder.com/600/92c952",
+    "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+    "author": "HanNH",
+    "group": "android",
+    "date": "23/12/2020"
+  },
+  {
+    "albumId": 1,
+    "id": 2,
+    "title": "ios tutorial",
+    "url": "https://via.placeholder.com/600/771796",
+    "thumbnailUrl": "https://via.placeholder.com/150/771796",
+    "author": "HanNH",
+    "group": "ios",
+    "date": "23/12/2020"
+  },
+  {
+    "albumId": 1,
+    "id": 3,
+    "title": "flutter tutorial",
+    "url": "https://via.placeholder.com/600/24f355",
+    "thumbnailUrl": "https://via.placeholder.com/150/24f355",
+    "author": "HanNH",
+    "group": "Flutter",
+    "date": "23/12/2020"
+  },
+  {
+    "albumId": 1,
+    "id": 4,
+    "title": "react native tutorial",
+    "url": "https://via.placeholder.com/600/d32776",
+    "thumbnailUrl": "https://via.placeholder.com/150/d32776",
+    "author": "HanNH",
+    "group": "react native ",
+    "date": "23/12/2020"
+  },
+  {
+    "albumId": 1,
+    "id": 5,
+    "title": "none",
+    "url": "https://via.placeholder.com/600/f66b97",
+    "thumbnailUrl": "https://via.placeholder.com/150/f66b97",
+    "author": "HanNH",
+    "group": "None",
+    "date": "23/12/2020"
+  }
+];
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int first = 0, second = 0;
+  String opp = "";
+  String result = "", text = "";
+  void btnClicked(String btnText) {
+    if (btnText == "C") {
+      result = "";
+      text = "";
+      first = 0;
+      second = 0;
+    } else if (btnText == "+" ||
+        btnText == "-" ||
+        btnText == "*" ||
+        btnText == "/") {
+      first = int.parse(text);
+      result = "";
+      opp = btnText;
+    } else if (btnText == "=") {
+      second = int.parse(text);
+      if (opp == "+") {
+        result = (first + second).toString();
+      } else if (opp == "-") {
+        result = (first - second).toString();
+      } else if (opp == "*") {
+        result = (first * second).toString();
+      } else if (opp == "/") {
+        result = (first ~/ second).toString();
+      }
+    } else {
+      result = int.parse(text + btnText).toString();
+    }
+    setState(() {
+      text = result;
+    });
+  }
+
+  Widget customOutlineButton(String value) {
+    return Expanded(
+      child: OutlinedButton(
+          onPressed: () => btnClicked(value),
+          child: Text(
+            "${value}",
+            style: TextStyle(fontSize: 25),
+          )),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Calculator')),
+      body: Container(
+        child: Column(
+          children: [
+            Expanded(
+                child: Container(
+              color: Colors.yellowAccent,
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.all(10),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.red,
+                ),
+              ),
+            )),
+            Row(
+              children: [
+                customOutlineButton("9"),
+                customOutlineButton("8"),
+                customOutlineButton("7"),
+                customOutlineButton("+"),
+              ],
+            ),
+            Row(
+              children: [
+                customOutlineButton("6"),
+                customOutlineButton("5"),
+                customOutlineButton("4"),
+                customOutlineButton("-"),
+              ],
+            ),
+            Row(
+              children: [
+                customOutlineButton("3"),
+                customOutlineButton("2"),
+                customOutlineButton("1"),
+                customOutlineButton("*"),
+              ],
+            ),
+            Row(
+              children: [
+                customOutlineButton("C"),
+                customOutlineButton("0"),
+                customOutlineButton("="),
+                customOutlineButton("/"),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
